@@ -8,11 +8,11 @@ module.exports = UserClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/user'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor UserClient
  */
-function UserClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function UserClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Get a user. This resource cannot be accessed anonymously.
@@ -28,7 +28,7 @@ function UserClient(jiraClient) {
      */
     this.getUser = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/user'),
+            uri: this.jiraConnector.buildURL('/user'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
@@ -46,7 +46,7 @@ function UserClient(jiraClient) {
             });
         }
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -62,7 +62,7 @@ function UserClient(jiraClient) {
      */
     this.deleteUser = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/user'),
+            uri: this.jiraConnector.buildURL('/user'),
             method: 'DELETE',
             json: true,
             followAllRedirects: true,
@@ -72,7 +72,7 @@ function UserClient(jiraClient) {
             }
         };
 
-        return this.jiraClient.makeRequest(options, callback, 'User removed.');
+        return this.jiraConnector.makeRequest(options, callback, 'User removed.');
     };
 
     /**
@@ -88,14 +88,14 @@ function UserClient(jiraClient) {
      */
     this.createUser = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/user'),
+            uri: this.jiraConnector.buildURL('/user'),
             method: 'POST',
             json: true,
             followAllRedirects: true,
             body: opts.user
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -113,7 +113,7 @@ function UserClient(jiraClient) {
      */
     this.editUser = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/user'),
+            uri: this.jiraConnector.buildURL('/user'),
             method: 'PUT',
             json: true,
             followAllRedirects: true,
@@ -124,7 +124,7 @@ function UserClient(jiraClient) {
             body: opts.user
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -152,7 +152,7 @@ function UserClient(jiraClient) {
             projectKeyString = projectKeyString.slice(0, -1);
         }
         var options = {
-            uri: this.jiraClient.buildURL('/user/assignable/multiProjectSearch'),
+            uri: this.jiraConnector.buildURL('/user/assignable/multiProjectSearch'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
@@ -163,7 +163,7 @@ function UserClient(jiraClient) {
                 maxResults: opts.maxResults
             }
         };
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -188,7 +188,7 @@ function UserClient(jiraClient) {
      */
     this.searchAssignable = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/user/assignable/search'),
+            uri: this.jiraConnector.buildURL('/user/assignable/search'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
@@ -201,7 +201,7 @@ function UserClient(jiraClient) {
                 actionDescriptorId: opts.actionDescriptorId
             }
         };
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -224,7 +224,7 @@ function UserClient(jiraClient) {
         extension = extension == 'jpg' ? 'jpeg' : extension;
 
         var options = {
-            uri: this.jiraClient.buildURL('/user/avatar/temporary'),
+            uri: this.jiraConnector.buildURL('/user/avatar/temporary'),
             method: 'POST',
             followAllRedirects: true,
             qs: {
@@ -238,7 +238,7 @@ function UserClient(jiraClient) {
                 "Content-Type": 'image/' + extension
             }
         };
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -254,7 +254,7 @@ function UserClient(jiraClient) {
      */
     this.convertTemporaryAvatar = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/user/avatar/'),
+            uri: this.jiraConnector.buildURL('/user/avatar/'),
             method: 'PUT',
             json: true,
             followAllRedirects: true,
@@ -266,7 +266,7 @@ function UserClient(jiraClient) {
                 "X-Atlassian-Token": 'no-check'
             }
         };
-        return this.jiraClient.makeRequest(options, callback, 'Avatar Converted');
+        return this.jiraConnector.makeRequest(options, callback, 'Avatar Converted');
     };
 
     /**
@@ -282,7 +282,7 @@ function UserClient(jiraClient) {
      */
     this.deleteAvatar = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/user/avatar/' + opts.avatarId),
+            uri: this.jiraConnector.buildURL('/user/avatar/' + opts.avatarId),
             method: 'DELETE',
             json: true,
             followAllRedirects: true,
@@ -290,7 +290,7 @@ function UserClient(jiraClient) {
                 username: opts.username
             }
         };
-        return this.jiraClient.makeRequest(options, callback, 'Avatar Deleted');
+        return this.jiraConnector.makeRequest(options, callback, 'Avatar Deleted');
     };
 
     /**
@@ -305,7 +305,7 @@ function UserClient(jiraClient) {
      */
     this.getAvatars = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/user/avatars'),
+            uri: this.jiraConnector.buildURL('/user/avatars'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
@@ -313,7 +313,7 @@ function UserClient(jiraClient) {
                 username: opts.username
             }
         };
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -329,7 +329,7 @@ function UserClient(jiraClient) {
      */
     this.getDefaultColumns = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/user/columns'),
+            uri: this.jiraConnector.buildURL('/user/columns'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
@@ -337,7 +337,7 @@ function UserClient(jiraClient) {
                 username: opts.username
             }
         };
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -355,7 +355,7 @@ function UserClient(jiraClient) {
      */
     this.setDefaultColumns = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/user/columns'),
+            uri: this.jiraConnector.buildURL('/user/columns'),
             method: 'PUT',
             json: true,
             followAllRedirects: true,
@@ -366,7 +366,7 @@ function UserClient(jiraClient) {
                 columns: opts.columns
             }
         };
-        return this.jiraClient.makeRequest(options, callback, 'Default Columns Set');
+        return this.jiraConnector.makeRequest(options, callback, 'Default Columns Set');
     };
 
     /**
@@ -382,7 +382,7 @@ function UserClient(jiraClient) {
      */
     this.resetDefaultColumns = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/user/columns'),
+            uri: this.jiraConnector.buildURL('/user/columns'),
             method: 'DELETE',
             json: true,
             followAllRedirects: true,
@@ -390,7 +390,7 @@ function UserClient(jiraClient) {
                 username: opts.username
             }
         };
-        return this.jiraClient.makeRequest(options, callback, 'Default Columns Reset');
+        return this.jiraConnector.makeRequest(options, callback, 'Default Columns Reset');
     };
 
     /**
@@ -407,7 +407,7 @@ function UserClient(jiraClient) {
      */
     this.changePassword = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/user/password'),
+            uri: this.jiraConnector.buildURL('/user/password'),
             method: 'PUT',
             json: true,
             followAllRedirects: true,
@@ -419,7 +419,7 @@ function UserClient(jiraClient) {
                 password: opts.password
             }
         };
-        return this.jiraClient.makeRequest(options, callback, 'Password Changed');
+        return this.jiraConnector.makeRequest(options, callback, 'Password Changed');
     };
 
     /**
@@ -455,7 +455,7 @@ function UserClient(jiraClient) {
             permissions = permissions.slice(0, -1);
         }
         var options = {
-            uri: this.jiraClient.buildURL('/user/permission/search'),
+            uri: this.jiraConnector.buildURL('/user/permission/search'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
@@ -468,7 +468,7 @@ function UserClient(jiraClient) {
                 maxResults: opts.maxResults
             }
         };
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -486,7 +486,7 @@ function UserClient(jiraClient) {
      */
     this.searchPicker = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/user/picker'),
+            uri: this.jiraConnector.buildURL('/user/picker'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
@@ -497,7 +497,7 @@ function UserClient(jiraClient) {
                 exclude: opts.exclude
             }
         };
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -519,7 +519,7 @@ function UserClient(jiraClient) {
      */
     this.search = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/user/search'),
+            uri: this.jiraConnector.buildURL('/user/search'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
@@ -531,7 +531,7 @@ function UserClient(jiraClient) {
                 includeInactive: opts.includeInactive
             }
         };
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -552,7 +552,7 @@ function UserClient(jiraClient) {
      */
     this.viewIssueSearch = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/user/viewissue/search'),
+            uri: this.jiraConnector.buildURL('/user/viewissue/search'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
@@ -564,6 +564,6 @@ function UserClient(jiraClient) {
                 maxResults: opts.maxResults
             }
         };
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 }

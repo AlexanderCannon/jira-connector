@@ -19,11 +19,11 @@
 
     <h1 class="page-title">Home</h1>
 
-    
 
 
 
-    
+
+
 
 
     <h3>jira-connector 1.7.0</h3>
@@ -37,7 +37,7 @@
 
 
 
-    
+
 
 
 
@@ -60,9 +60,9 @@ markup for the docs.</p>
 the functions in jira-connector use the exact same format as the request bodies of these endpoints.</p>
 <h2>Example</h2><p>Retrieve an issue from Jira, and print its summary to the console.</p>
 <pre class="prettyprint source lang-javascript"><code>
-var JiraClient = require('jira-connector');
+var JiraConnector = require('jira-connector');
 
-var jira = new JiraClient( {
+var jira = new JiraConnector( {
     host: 'jenjinstudios.atlassian.net'
 });
 
@@ -86,9 +86,9 @@ for various API calls.</p>
 <h3>Basic Authentication</h3><p>This is not recommended; it will require you to provide a username and password each time you connect to the
 Jira instance.  However, jira-connector supports it for users who are unable to use OAuth.</p>
 <p>Example:</p>
-<pre class="prettyprint source lang-javascript"><code>var JiraClient = require('jira-connector');
+<pre class="prettyprint source lang-javascript"><code>var JiraConnector = require('jira-connector');
 
-var jira = new JiraClient( {
+var jira = new JiraConnector( {
     host: 'jenjinstudios.atlassian.net',
     basic_auth: {
         username: 'SirUserOfName',
@@ -98,9 +98,9 @@ var jira = new JiraClient( {
 and password (a Base64 encoding in the format of &quot;username:password&quot;) each time you connect to the Jira instance.</p>
 <p>More examples <a href="https://developer.atlassian.com/jiradev/jira-apis/jira-rest-apis/jira-rest-api-tutorials/jira-rest-api-example-basic-authentication">here</a>.</p>
 <p>Example:</p>
-<pre class="prettyprint source lang-javascript"><code>var JiraClient = require('jira-connector');
+<pre class="prettyprint source lang-javascript"><code>var JiraConnector = require('jira-connector');
 
-var jira = new JiraClient( {
+var jira = new JiraConnector( {
     host: 'jenjinstudios.atlassian.net',
     basic_auth: {
         base64: 'U2lyVXNlck9mTmFtZTpQYXNzd29yZDEyMw=='
@@ -118,9 +118,9 @@ be helpful in configuring OAuth Access.</p>
 create the link, and the consumer key that was provided when the link was created.</p>
 <p>Once you have this data, you will need to generate an OAuth token and secret for your account; jira-connector provides
 helper functions for exactly this purpose:</p>
-<pre class="prettyprint source lang-javascript"><code>var JiraClient = require('./index.js');
+<pre class="prettyprint source lang-javascript"><code>var JiraConnector = require('./index.js');
 
-JiraClient.oauth_util.getAuthorizeURL({
+JiraConnector.oauth_util.getAuthorizeURL({
     host: 'jenjinstudios.atlassian.net',
     oauth: {
         consumer_key: 'your-consumer-key',
@@ -138,9 +138,9 @@ JiraClient.oauth_util.getAuthorizeURL({
 }</code></pre><p>You can then visit the specified URL, which will display a page asking you to allow or deny the request for access.
 Allowing access will display a verifier code.  Once you have this code, you can swap out your current OAuth token
 for an Access Token with all the permissions of your account; jira-connector provides a function to help with this:</p>
-<pre class="prettyprint source lang-javascript"><code>var JiraClient = require('./index.js');
+<pre class="prettyprint source lang-javascript"><code>var JiraConnector = require('./index.js');
 
-JiraClient.oauth_util.swapRequestTokenWithAccessToken({
+JiraConnector.oauth_util.swapRequestTokenWithAccessToken({
     host: 'jenjinstudios.atlassian.net',
     oauth: {
         token: 'your-oauth-token',
@@ -155,9 +155,9 @@ JiraClient.oauth_util.swapRequestTokenWithAccessToken({
     console.log(accessToken);
 });</code></pre><p>This will query Jira for an Access Token, which will then be printed to the screen.  Finally, you're ready to access
 Jira with OAuth!</p>
-<pre class="prettyprint source lang-javascript"><code>var JiraClient = require('./index.js');
+<pre class="prettyprint source lang-javascript"><code>var JiraConnector = require('./index.js');
 
-var jira = new JiraClient({
+var jira = new JiraConnector({
     host: 'jenjinstudios.atlassian.net',
     oauth: {
         consumer_key: 'your-consumer-key',
@@ -172,7 +172,7 @@ var jira = new JiraClient({
 // Jira is now authenticted with your account!</code></pre><h3>Cookie Jar</h3><p>You can also use a Cookie Jar for your request. It could be an easier way to prompt for a login only once, without the
 pain of setting up an OAuth method.</p>
 <p>For example, using <code>though-cookie-filestore</code>:</p>
-<pre class="prettyprint source lang-javascript"><code>var JiraClient = require('../jira-connector'),
+<pre class="prettyprint source lang-javascript"><code>var JiraConnector = require('../jira-connector'),
     FileCookieStore = require('tough-cookie-filestore'),
 
     request = require('request'),
@@ -181,7 +181,7 @@ pain of setting up an OAuth method.</p>
 var jar = request.jar(new FileCookieStore(path.join(__dirname, 'cookies.json')));
 
 // For the first connection
-var jira = new JiraClient( {
+var jira = new JiraConnector( {
     host: 'jenjinstudios.atlassian.net',
     basic_auth: {
         username: 'SirUserOfName',
@@ -191,7 +191,7 @@ var jira = new JiraClient( {
 });
 
 // For the following connections
-var jira = new JiraClient( {
+var jira = new JiraConnector( {
     host: 'jenjinstudios.atlassian.net',
     cookie_jar: jar
 });</code></pre><p>In this example, all your cookies are save in a file, <code>cookies.json</code>. Currently, the file <strong>MUST</strong> exist, it's a
@@ -530,7 +530,7 @@ is still valid!</p>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ApplicationPropertiesClient.html">ApplicationPropertiesClient</a></li><li><a href="AttachmentClient.html">AttachmentClient</a></li><li><a href="AuditingClient.html">AuditingClient</a></li><li><a href="AvatarClient.html">AvatarClient</a></li><li><a href="CommentClient.html">CommentClient</a></li><li><a href="ComponentClient.html">ComponentClient</a></li><li><a href="CustomFieldOptionClient.html">CustomFieldOptionClient</a></li><li><a href="DashboardClient.html">DashboardClient</a></li><li><a href="FieldClient.html">FieldClient</a></li><li><a href="FilterClient.html">FilterClient</a></li><li><a href="GroupClient.html">GroupClient</a></li><li><a href="GroupsClient.html">GroupsClient</a></li><li><a href="GroupUserPickerClient.html">GroupUserPickerClient</a></li><li><a href="IssueClient.html">IssueClient</a></li><li><a href="IssueLinkClient.html">IssueLinkClient</a></li><li><a href="IssueLinkTypeClient.html">IssueLinkTypeClient</a></li><li><a href="IssueTypeClient.html">IssueTypeClient</a></li><li><a href="JiraClient.html">JiraClient</a></li><li><a href="JqlClient.html">JqlClient</a></li><li><a href="LicenseRoleClient.html">LicenseRoleClient</a></li><li><a href="LicenseValidatorClient.html">LicenseValidatorClient</a></li><li><a href="MyPermissionsClient.html">MyPermissionsClient</a></li><li><a href="MyPreferencesClient.html">MyPreferencesClient</a></li><li><a href="MyselfClient.html">MyselfClient</a></li><li><a href="PasswordClient.html">PasswordClient</a></li><li><a href="PriorityClient.html">PriorityClient</a></li><li><a href="ProjectCategoryClient.html">ProjectCategoryClient</a></li><li><a href="ProjectClient.html">ProjectClient</a></li><li><a href="ProjectValidateClient.html">ProjectValidateClient</a></li><li><a href="ReindexClient.html">ReindexClient</a></li><li><a href="ResolutionClient.html">ResolutionClient</a></li><li><a href="ScreensClient.html">ScreensClient</a></li><li><a href="SearchClient.html">SearchClient</a></li><li><a href="SecurityLevelClient.html">SecurityLevelClient</a></li><li><a href="ServerInfoClient.html">ServerInfoClient</a></li><li><a href="SettingsClient.html">SettingsClient</a></li><li><a href="StatusCategoryClient.html">StatusCategoryClient</a></li><li><a href="StatusClient.html">StatusClient</a></li><li><a href="UserClient.html">UserClient</a></li><li><a href="VersionClient.html">VersionClient</a></li><li><a href="WorkflowClient.html">WorkflowClient</a></li><li><a href="WorkflowSchemeClient.html">WorkflowSchemeClient</a></li></ul><h3>Namespaces</h3><ul><li><a href="OauthUtil.html">OauthUtil</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ApplicationPropertiesClient.html">ApplicationPropertiesClient</a></li><li><a href="AttachmentClient.html">AttachmentClient</a></li><li><a href="AuditingClient.html">AuditingClient</a></li><li><a href="AvatarClient.html">AvatarClient</a></li><li><a href="CommentClient.html">CommentClient</a></li><li><a href="ComponentClient.html">ComponentClient</a></li><li><a href="CustomFieldOptionClient.html">CustomFieldOptionClient</a></li><li><a href="DashboardClient.html">DashboardClient</a></li><li><a href="FieldClient.html">FieldClient</a></li><li><a href="FilterClient.html">FilterClient</a></li><li><a href="GroupClient.html">GroupClient</a></li><li><a href="GroupsClient.html">GroupsClient</a></li><li><a href="GroupUserPickerClient.html">GroupUserPickerClient</a></li><li><a href="IssueClient.html">IssueClient</a></li><li><a href="IssueLinkClient.html">IssueLinkClient</a></li><li><a href="IssueLinkTypeClient.html">IssueLinkTypeClient</a></li><li><a href="IssueTypeClient.html">IssueTypeClient</a></li><li><a href="JiraConnector.html">JiraConnector</a></li><li><a href="JqlClient.html">JqlClient</a></li><li><a href="LicenseRoleClient.html">LicenseRoleClient</a></li><li><a href="LicenseValidatorClient.html">LicenseValidatorClient</a></li><li><a href="MyPermissionsClient.html">MyPermissionsClient</a></li><li><a href="MyPreferencesClient.html">MyPreferencesClient</a></li><li><a href="MyselfClient.html">MyselfClient</a></li><li><a href="PasswordClient.html">PasswordClient</a></li><li><a href="PriorityClient.html">PriorityClient</a></li><li><a href="ProjectCategoryClient.html">ProjectCategoryClient</a></li><li><a href="ProjectClient.html">ProjectClient</a></li><li><a href="ProjectValidateClient.html">ProjectValidateClient</a></li><li><a href="ReindexClient.html">ReindexClient</a></li><li><a href="ResolutionClient.html">ResolutionClient</a></li><li><a href="ScreensClient.html">ScreensClient</a></li><li><a href="SearchClient.html">SearchClient</a></li><li><a href="SecurityLevelClient.html">SecurityLevelClient</a></li><li><a href="ServerInfoClient.html">ServerInfoClient</a></li><li><a href="SettingsClient.html">SettingsClient</a></li><li><a href="StatusCategoryClient.html">StatusCategoryClient</a></li><li><a href="StatusClient.html">StatusClient</a></li><li><a href="UserClient.html">UserClient</a></li><li><a href="VersionClient.html">VersionClient</a></li><li><a href="WorkflowClient.html">WorkflowClient</a></li><li><a href="WorkflowSchemeClient.html">WorkflowSchemeClient</a></li></ul><h3>Namespaces</h3><ul><li><a href="OauthUtil.html">OauthUtil</a></li></ul>
 </nav>
 
 <br class="clear">

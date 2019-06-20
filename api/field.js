@@ -5,11 +5,11 @@ module.exports = FieldClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/field'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor FieldClient
  */
-function FieldClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function FieldClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Returns a list of all fields, both System and Custom
@@ -22,13 +22,13 @@ function FieldClient(jiraClient) {
      */
     this.getAllFields = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/field'),
+            uri: this.jiraConnector.buildURL('/field'),
             method: 'GET',
             json: true,
             followAllRedirects: true
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -43,13 +43,13 @@ function FieldClient(jiraClient) {
      */
     this.createCustomField = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/field'),
+            uri: this.jiraConnector.buildURL('/field'),
             method: 'POST',
             json: true,
             followAllRedirects: true,
             body: opts.field
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     }
 }

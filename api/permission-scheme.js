@@ -5,7 +5,7 @@ module.exports = PermissionSchemeClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/permissionscheme'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraClient
  * @constructor PermissionSchemeClient
  */
 function PermissionSchemeClient(jiraClient) {
@@ -96,11 +96,11 @@ function PermissionSchemeClient(jiraClient) {
 
     /**
      * Updates a permission scheme.
-     * 
+     *
      * If the permissions list is present then it will be set in the permission scheme,
      * which basically means it will overwrite any permission grants that existed in the permission scheme.
      * Sending an empty list will remove all permission grants from the permission scheme.
-     * 
+     *
      * To update just the name and description, do not send permissions list at all.
      * To add or remove a single permission grant instead of updating the whole list
      * at once use the {schemeId}/permission/ resource.

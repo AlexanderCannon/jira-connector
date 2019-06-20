@@ -47,13 +47,13 @@ Retrieve an issue from Jira, and print its summary to the console.
 
 ```javascript
 // ES5
-var JiraClient = require('jira-connector');
+var JiraConnector = require('jira-connector');
 
 // ES6 or Typescript
-import JiraClient from 'jira-connector';
+import JiraConnector from 'jira-connector';
 
 // Initialize
-var jira = new JiraClient({
+var jira = new JiraConnector({
     host: 'jenjinstudios.atlassian.net',
     strictSSL: true // One of optional parameters
 });
@@ -103,9 +103,9 @@ Jira instance. However, jira-connector supports it for users who are unable to u
 Example:
 
 ```javascript
-var JiraClient = require("jira-connector");
+var JiraConnector = require("jira-connector");
 
-var jira = new JiraClient({
+var jira = new JiraConnector({
   host: "jenjinstudios.atlassian.net",
   basic_auth: {
     username: "SirUserOfName",
@@ -124,9 +124,9 @@ More examples [here](https://developer.atlassian.com/jiradev/jira-apis/jira-rest
 Example:
 
 ```javascript
-var JiraClient = require("jira-connector");
+var JiraConnector = require("jira-connector");
 
-var jira = new JiraClient({
+var jira = new JiraConnector({
   host: "jenjinstudios.atlassian.net",
   basic_auth: {
     base64: "U2lyVXNlck9mTmFtZTpQYXNzd29yZDEyMw=="
@@ -155,9 +155,9 @@ Once you have this data, you will need to generate an OAuth token and secret for
 helper functions for exactly this purpose:
 
 ```javascript
-var JiraClient = require("jira-connector");
+var JiraConnector = require("jira-connector");
 
-JiraClient.oauth_util.getAuthorizeURL(
+JiraConnector.oauth_util.getAuthorizeURL(
   {
     host: "jenjinstudios.atlassian.net",
     oauth: {
@@ -189,9 +189,9 @@ Allowing access will display a verifier code. Once you have this code, you can s
 for an Access Token with all the permissions of your account; jira-connector provides a function to help with this:
 
 ```javascript
-var JiraClient = require("jira-connector");
+var JiraConnector = require("jira-connector");
 
-JiraClient.oauth_util.swapRequestTokenWithAccessToken(
+JiraConnector.oauth_util.swapRequestTokenWithAccessToken(
   {
     host: "jenjinstudios.atlassian.net",
     oauth: {
@@ -215,9 +215,9 @@ This will query Jira for an Access Token, which will then be printed to the scre
 Jira with OAuth!
 
 ```javascript
-var JiraClient = require("jira-connector");
+var JiraConnector = require("jira-connector");
 
-var jira = new JiraClient({
+var jira = new JiraConnector({
   host: "jenjinstudios.atlassian.net",
   oauth: {
     consumer_key: "your-consumer-key",
@@ -241,7 +241,7 @@ pain of setting up an OAuth method.
 For example, using `though-cookie-filestore`:
 
 ```javascript
-var JiraClient = require("jira-connector");
+var JiraConnector = require("jira-connector");
 var FileCookieStore = require("tough-cookie-filestore");
 
 var request = require("request");
@@ -252,7 +252,7 @@ var jar = request.jar(
 );
 
 // For the first connection
-var jira = new JiraClient({
+var jira = new JiraConnector({
   host: "jenjinstudios.atlassian.net",
   basic_auth: {
     username: "SirUserOfName",
@@ -262,7 +262,7 @@ var jira = new JiraClient({
 });
 
 // For the following connections
-var jira = new JiraClient({
+var jira = new JiraConnector({
   host: "jenjinstudios.atlassian.net",
   cookie_jar: jar
 });

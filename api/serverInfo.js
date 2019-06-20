@@ -4,11 +4,11 @@ module.exports = ServerInfoClient;
 
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/serverInfo'
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor ServerInfoClient
  */
-function ServerInfoClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function ServerInfoClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Returns general information about the current JIRA server.
@@ -22,7 +22,7 @@ function ServerInfoClient(jiraClient) {
      */
     this.getServerInfo = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/serverInfo'),
+            uri: this.jiraConnector.buildURL('/serverInfo'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
@@ -31,6 +31,6 @@ function ServerInfoClient(jiraClient) {
             }
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     }
 }

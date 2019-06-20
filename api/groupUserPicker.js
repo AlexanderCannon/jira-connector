@@ -4,11 +4,11 @@ module.exports = GroupUserPickerClient;
 
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/groupuserpicker'
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor GroupUserPickerClient
  */
-function GroupUserPickerClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function GroupUserPickerClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Returns a list of users and groups matching query with highlighting. This resource cannot be accessed
@@ -36,7 +36,7 @@ function GroupUserPickerClient(jiraClient) {
      */
     this.findUsersAndGroups = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/groupuserpicker'),
+            uri: this.jiraConnector.buildURL('/groupuserpicker'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
@@ -50,6 +50,6 @@ function GroupUserPickerClient(jiraClient) {
             }
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 }

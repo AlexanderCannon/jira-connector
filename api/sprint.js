@@ -4,7 +4,7 @@ module.exports = AgileSprintClient;
 
 /**
  * Used to access Jira REST endpoints in '/rest/agile/1.0/sprint'
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraClient
  * @constructor AgileSprintClient
  */
 function AgileSprintClient(jiraClient) {

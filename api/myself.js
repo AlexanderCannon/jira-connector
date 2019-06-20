@@ -5,11 +5,11 @@ module.exports = MyselfClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/myself'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor MyselfClient
  */
-function MyselfClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function MyselfClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Returns currently logged user. This resource cannot be accessed anonymously.
@@ -22,14 +22,14 @@ function MyselfClient(jiraClient) {
      */
     this.getMyself = function (debug, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/myself'),
+            uri: this.jiraConnector.buildURL('/myself'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
             debug: debug,
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -45,14 +45,14 @@ function MyselfClient(jiraClient) {
      */
     this.editMyself = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/myself'),
+            uri: this.jiraConnector.buildURL('/myself'),
             method: 'PUT',
             json: true,
             followAllRedirects: true,
             body: opts.newData
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -67,13 +67,13 @@ function MyselfClient(jiraClient) {
      */
     this.changePassword = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/myself/password'),
+            uri: this.jiraConnector.buildURL('/myself/password'),
             method: 'PUT',
             json: true,
             followAllRedirects: true,
             body: opts.newData
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     }
 }

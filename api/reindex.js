@@ -5,7 +5,7 @@ module.exports = ReindexClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/reindex'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraClient
  * @constructor ReindexClient
  */
 function ReindexClient(jiraClient) {

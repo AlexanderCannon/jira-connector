@@ -8,11 +8,11 @@ module.exports = AuthClient;
 /**
  * Used to access Jira REST endpoints in '/rest/auth/1/session'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor UserClient
  */
-function AuthClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function AuthClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Logs the current user out of JIRA, destroying the existing session, if any.
@@ -24,13 +24,13 @@ function AuthClient(jiraClient) {
      */
     this.logout = function (callback) {
         var options = {
-            uri: this.jiraClient.buildAuthURL('/session'),
+            uri: this.jiraConnector.buildAuthURL('/session'),
             method: 'DELETE',
             json: true,
             followAllRedirects: true
         };
 
-        return this.jiraClient.makeRequest(options, callback, 'User logged out.');
+        return this.jiraConnector.makeRequest(options, callback, 'User logged out.');
     };
 
     /**
@@ -46,14 +46,14 @@ function AuthClient(jiraClient) {
      */
     this.login = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildAuthURL('/session'),
+            uri: this.jiraConnector.buildAuthURL('/session'),
             method: 'POST',
             json: true,
             followAllRedirects: true,
             body: opts
         };
 
-        return this.jiraClient.makeRequest(options, callback, 'User logged in.');
+        return this.jiraConnector.makeRequest(options, callback, 'User logged in.');
     };
 
     /**
@@ -66,12 +66,12 @@ function AuthClient(jiraClient) {
      */
     this.currentUser = function (callback) {
         var options = {
-            uri: this.jiraClient.buildAuthURL('/session'),
+            uri: this.jiraConnector.buildAuthURL('/session'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 }

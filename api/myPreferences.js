@@ -5,11 +5,11 @@ module.exports = MyPreferencesClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/mypreferences'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor MyPreferencesClient
  */
-function MyPreferencesClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function MyPreferencesClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Gets preference of the currently logged in user. Preference key must be provided as input parameter (key).
@@ -24,7 +24,7 @@ function MyPreferencesClient(jiraClient) {
      */
     this.getPreference = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/mypreferences'),
+            uri: this.jiraConnector.buildURL('/mypreferences'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
@@ -33,7 +33,7 @@ function MyPreferencesClient(jiraClient) {
             }
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -49,7 +49,7 @@ function MyPreferencesClient(jiraClient) {
      */
     this.editPreference = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/mypreferences'),
+            uri: this.jiraConnector.buildURL('/mypreferences'),
             method: 'PUT',
             json: true,
             followAllRedirects: true,
@@ -59,7 +59,7 @@ function MyPreferencesClient(jiraClient) {
             body: opts.value
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -74,7 +74,7 @@ function MyPreferencesClient(jiraClient) {
      */
     this.deletePreference = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/mypreferences'),
+            uri: this.jiraConnector.buildURL('/mypreferences'),
             method: 'DELETE',
             json: true,
             followAllRedirects: true,
@@ -83,6 +83,6 @@ function MyPreferencesClient(jiraClient) {
             }
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     }
 }

@@ -5,7 +5,7 @@ module.exports = FilterClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/filter'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraClient
  * @constructor FilterClient
  */
 function FilterClient(jiraClient) {

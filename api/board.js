@@ -4,11 +4,11 @@ module.exports = AgileBoardClient;
 
 /**
  * Used to access Jira REST endpoints in '/rest/agile/1.0/dashboard'
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor AgileBoardClient
  */
-function AgileBoardClient(jiraClient) {
-  this.jiraClient = jiraClient;
+function AgileBoardClient(jiraConnector) {
+  this.jiraConnector = jiraConnector;
 
   /**
    * Get a list of all dashboards, optionally filtering them.
@@ -45,7 +45,7 @@ function AgileBoardClient(jiraClient) {
     opts = opts || {};
 
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board'),
+      uri: this.jiraConnector.buildAgileURL('/board'),
       method: 'GET',
       json: true,
       followAllRedirects: true,
@@ -66,7 +66,7 @@ function AgileBoardClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   /**
@@ -88,7 +88,7 @@ function AgileBoardClient(jiraClient) {
    */
   this.createBoard = function (name, type, filterId, location, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board'),
+      uri: this.jiraConnector.buildAgileURL('/board'),
       method: 'POST',
       followAllRedirects: true,
       json: true,
@@ -100,13 +100,13 @@ function AgileBoardClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   // TODO add JsDoc
   this.getBoardByFilterId = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('board/filter/' + opts.filterId),
+      uri: this.jiraConnector.buildAgileURL('board/filter/' + opts.filterId),
       method: 'GET',
       followAllRedirects: true,
       json: true,
@@ -116,7 +116,7 @@ function AgileBoardClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   /**
@@ -131,13 +131,13 @@ function AgileBoardClient(jiraClient) {
    */
   this.getBoard = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId),
       method: 'GET',
       json: true,
       followAllRedirects: true,
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   /**
@@ -152,13 +152,13 @@ function AgileBoardClient(jiraClient) {
    */
   this.deleteBoard = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId),
       method: 'DELETE',
       json: true,
       followAllRedirects: true
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   /**
@@ -190,7 +190,7 @@ function AgileBoardClient(jiraClient) {
     }
 
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId + '/backlog'),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId + '/backlog'),
       method: 'GET',
       json: true,
       followAllRedirects: true,
@@ -204,7 +204,7 @@ function AgileBoardClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   /**
@@ -219,7 +219,7 @@ function AgileBoardClient(jiraClient) {
    */
   this.getConfiguration = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL(
+      uri: this.jiraConnector.buildAgileURL(
         '/board/' + opts.boardId + '/configuration'
       ),
       method: 'GET',
@@ -227,7 +227,7 @@ function AgileBoardClient(jiraClient) {
       followAllRedirects: true
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   /**
@@ -248,7 +248,7 @@ function AgileBoardClient(jiraClient) {
    */
   this.getEpics = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL(
+      uri: this.jiraConnector.buildAgileURL(
         '/board/' + opts.boardId + '/epic'
       ),
       method: 'GET',
@@ -261,7 +261,7 @@ function AgileBoardClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   /**
@@ -288,7 +288,7 @@ function AgileBoardClient(jiraClient) {
    */
   this.getIssuesWithoutEpic = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL(
+      uri: this.jiraConnector.buildAgileURL(
         '/board/' + opts.boardId + '/epic/none/issue'
       ),
       method: 'GET',
@@ -304,7 +304,7 @@ function AgileBoardClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   // TODO add JsDoc
@@ -324,7 +324,7 @@ function AgileBoardClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   // TODO add JsDoc
@@ -336,7 +336,7 @@ function AgileBoardClient(jiraClient) {
       followAllRedirects: true
     }
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   // TODO add JsDoc
@@ -353,7 +353,7 @@ function AgileBoardClient(jiraClient) {
       }
     }
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   /**
@@ -381,7 +381,7 @@ function AgileBoardClient(jiraClient) {
    */
   this.getIssuesForBoard = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId + '/issue'),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId + '/issue'),
       method: 'GET',
       json: true,
       followAllRedirects: true,
@@ -395,13 +395,13 @@ function AgileBoardClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   // TODO add JsDoc
   this.moveIssuesToBoard = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId + '/issue'),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId + '/issue'),
       method: 'POST',
       json: true,
       followAllRedirects: true,
@@ -413,13 +413,13 @@ function AgileBoardClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   // TODO add JsDoc
   this.getProjects = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId + '/project'),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId + '/project'),
       method: 'GET',
       json: true,
       followAllRedirects: true,
@@ -429,68 +429,68 @@ function AgileBoardClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   // TODO add JsDoc
   this.getProjectsFull = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId + '/project/full'),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId + '/project/full'),
       method: 'GET',
       json: true,
       followAllRedirects: true
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   this.getBoardPropertyKeys = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId + '/properties'),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId + '/properties'),
       method: 'GET',
       json: true,
       followAllRedirects: true
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   }
 
   this.getBoardProperty = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId + '/properties/' + opts.propertyKey),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId + '/properties/' + opts.propertyKey),
       method: 'GET',
       json: true,
       followAllRedirects: true
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   }
 
   this.setBoardProperty = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId + '/properties/' + opts.propertyKey),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId + '/properties/' + opts.propertyKey),
       method: 'PUT',
       json: true,
       followAllRedirects: true
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   }
 
   this.deleteBoardProperty = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId + '/properties/' + opts.propertyKey),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId + '/properties/' + opts.propertyKey),
       method: 'DELETE',
       json: true,
       followAllRedirects: true
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   }
 
   this.getAllQuickFilters = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId + '/quickfilter'),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId + '/quickfilter'),
       method: 'GET',
       json: true,
       followAllRedirects: true,
@@ -500,23 +500,23 @@ function AgileBoardClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   }
 
   this.getQuickFilter = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId + '/quickfilter/' + opts.quickFilterId),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId + '/quickfilter/' + opts.quickFilterId),
       method: 'GET',
       json: true,
       followAllRedirects: true
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   }
 
   /**
    * Get a list of sprints associated with an agile board
-   * 
+   *
    * @deprecated Use board.getAllSprints
    *
    * @method getSprintsForBoard
@@ -557,7 +557,7 @@ function AgileBoardClient(jiraClient) {
    */
   this.getProjectsForBoard = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId + '/project'),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId + '/project'),
       method: 'GET',
       json: true,
       followAllRedirects: true,
@@ -567,7 +567,7 @@ function AgileBoardClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   /**
@@ -582,19 +582,19 @@ function AgileBoardClient(jiraClient) {
    */
   this.getReportsForBoard = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId + '/reports'),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId + '/reports'),
       method: 'GET',
       json: true,
       followAllRedirects: true
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   // TODO add JsDoc
   this.getAllSprints = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId + '/sprint'),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId + '/sprint'),
       method: 'GET',
       json: true,
       followAllRedirects: true,
@@ -605,13 +605,13 @@ function AgileBoardClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   // TODO add JsDoc
   this.getIssuesForSprint = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId + '/sprint/' + opts.sprintId + '/issue'),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId + '/sprint/' + opts.sprintId + '/issue'),
       method: 'GET',
       json: true,
       followAllRedirects: true,
@@ -625,13 +625,13 @@ function AgileBoardClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   // TODO add JsDoc
   this.getAllVersions = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL('/board/' + opts.boardId + '/version'),
+      uri: this.jiraConnector.buildAgileURL('/board/' + opts.boardId + '/version'),
       method: 'GET',
       json: true,
       followAllRedirects: true,
@@ -642,6 +642,6 @@ function AgileBoardClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 }

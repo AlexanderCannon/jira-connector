@@ -3,7 +3,7 @@ import { Board } from './api/board';
 import { Epic } from './api/epic';
 import { Issue } from './api/issue';
 
-export = JiraClient;
+export = JiraConnector;
 
 interface IConfig {
     host: string;
@@ -30,7 +30,7 @@ interface IConfig {
     rejectUnauthorized?: any;
 }
 
-declare class JiraClient {
+declare class JiraConnector {
     constructor(config: IConfig);
 
     public applicationProperties: any;
@@ -93,7 +93,7 @@ declare class JiraClient {
     public makeRequest(options: { [key: string]: any }, callback?: any, successString?: string): any;
 }
 
-declare namespace JiraClient {
+declare namespace JiraConnector {
     namespace oauth_util {
         function getAuthorizeURL(config: any, callback: any): any;
 

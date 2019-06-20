@@ -6,11 +6,11 @@ module.exports = AuditingClient;
 
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/auditing'
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor AuditingClient
  */
-function AuditingClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function AuditingClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Returns auditing records filtered using provided parameters
@@ -34,7 +34,7 @@ function AuditingClient(jiraClient) {
      */
     this.getAudits = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/auditing/record'),
+            uri: this.jiraConnector.buildURL('/auditing/record'),
             json: true,
             followAllRedirects: true,
             method: 'GET',
@@ -47,7 +47,7 @@ function AuditingClient(jiraClient) {
             }
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -65,13 +65,13 @@ function AuditingClient(jiraClient) {
         }
 
         var options = {
-            uri: this.jiraClient.buildURL('/auditing/record'),
+            uri: this.jiraConnector.buildURL('/auditing/record'),
             json: true,
             followAllRedirects: true,
             method: 'POST',
             body: opts.audit
         };
 
-        return this.jiraClient.makeRequest(options, callback, 'Audit Record Added');
+        return this.jiraConnector.makeRequest(options, callback, 'Audit Record Added');
     };
 }

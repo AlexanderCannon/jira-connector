@@ -5,7 +5,7 @@ module.exports = PermissionsClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/permissions'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraClient
  * @constructor PermissionsClient
  */
 function PermissionsClient(jiraClient) {

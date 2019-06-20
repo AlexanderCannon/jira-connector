@@ -5,11 +5,11 @@ module.exports = WebhookClient;
 /**
  * Used to access Jira REST endpoints in '/rest/webhook/1.0/webhook'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor WebhookClient
  */
-function WebhookClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function WebhookClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Returns a list of all registered webhooks.
@@ -22,13 +22,13 @@ function WebhookClient(jiraClient) {
      */
     this.getAllWebhooks = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildWebhookURL('/webhook'),
+            uri: this.jiraConnector.buildWebhookURL('/webhook'),
             method: 'GET',
             json: true,
             followAllRedirects: true
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -43,13 +43,13 @@ function WebhookClient(jiraClient) {
      */
     this.getWebhook = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildWebhookURL('/webhook/' + opts.webhookId),
+            uri: this.jiraConnector.buildWebhookURL('/webhook/' + opts.webhookId),
             method: 'GET',
             json: true,
             followAllRedirects: true
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -71,14 +71,14 @@ function WebhookClient(jiraClient) {
      */
     this.createWebhook = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildWebhookURL('/webhook'),
+            uri: this.jiraConnector.buildWebhookURL('/webhook'),
             method: 'POST',
             json: true,
             body: opts,
             followAllRedirects: true
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -93,12 +93,12 @@ function WebhookClient(jiraClient) {
      */
     this.deleteWebhook = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildWebhookURL('/webhook/' + opts.webhookId),
+            uri: this.jiraConnector.buildWebhookURL('/webhook/' + opts.webhookId),
             method: 'DELETE',
             json: true,
             followAllRedirects: true
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 }

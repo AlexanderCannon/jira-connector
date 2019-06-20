@@ -5,7 +5,7 @@ module.exports = ProjectCategoryClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/projectCategory'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraClient
  * @constructor ProjectCategoryClient
  */
 function ProjectCategoryClient(jiraClient) {

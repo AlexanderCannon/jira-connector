@@ -4,11 +4,11 @@ module.exports = LabelsClient;
 
 /**
  * Used to access Jira REST endpoints in '/rest/api/1.0/labels'
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor LabelsClient
  */
-function LabelsClient(jiraClient) {
-  this.jiraClient = jiraClient;
+function LabelsClient(jiraConnector) {
+  this.jiraConnector = jiraConnector;
 
   /**
    * Use this method to retrieve all the available labels
@@ -23,12 +23,12 @@ function LabelsClient(jiraClient) {
    */
   this.getLabels = function(opts, callback) {
     var options = {
-      uri: this.jiraClient.buildURL('/labels/suggest?query=' + opts.query, '1.0'),
+      uri: this.jiraConnector.buildURL('/labels/suggest?query=' + opts.query, '1.0'),
       method: 'GET',
       json: true,
       followAllRedirects: true
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 }

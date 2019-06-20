@@ -7,7 +7,7 @@ module.exports = GroupClient;
  *
  * These are considered experimental according to the Jira Docs, use at your own risk.
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraClient
  * @constructor GroupClient
  */
 function GroupClient(jiraClient) {

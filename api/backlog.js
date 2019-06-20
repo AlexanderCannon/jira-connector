@@ -4,11 +4,11 @@ module.exports = AgileBacklogClient;
 
 /**
  * Used to access Jira REST endpoints in '/rest/agile/1.0/backlog'
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor AgileBacklogClient
  */
-function AgileBacklogClient(jiraClient) {
-  this.jiraClient = jiraClient;
+function AgileBacklogClient(jiraConnector) {
+  this.jiraConnector = jiraConnector;
 
   /**
    * Move issues to the backlog. This operation is equivalent to remove future and active sprints from a given set of
@@ -24,7 +24,7 @@ function AgileBacklogClient(jiraClient) {
   this.moveIssuesToBacklog = function (opts, callback) {
     opts = opts || {};
     var options = {
-      uri: this.jiraClient.buildAgileURL("/backlog/issue"),
+      uri: this.jiraConnector.buildAgileURL("/backlog/issue"),
       method: "POST",
       json: true,
       followAllRedirects: true,
@@ -33,7 +33,7 @@ function AgileBacklogClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   /**
@@ -55,7 +55,7 @@ function AgileBacklogClient(jiraClient) {
    */
   this.moveIssuesToBacklogForBoard = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildAgileURL("/backlog/" + opts.boardId + "/issue"),
+      uri: this.jiraConnector.buildAgileURL("/backlog/" + opts.boardId + "/issue"),
       method: "POST",
       json: true,
       followAllRedirects: true,
@@ -67,6 +67,6 @@ function AgileBacklogClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 }

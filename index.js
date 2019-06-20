@@ -65,7 +65,7 @@ var worklog = require('./api/worklog');
 /**
  * Represents a client for the Jira REST API
  *
- * @constructor JiraClient
+ * @constructor JiraConnector
  * @property {AgileBoardClient} board
  * @property {AgileSprintClient} sprint
  *
@@ -123,7 +123,7 @@ var worklog = require('./api/worklog');
  * @param {string} [config.protocol=https] The protocol used to accses the Jira API.
  * @param {number} [config.port=443] The port number used to connect to Jira.
  * @param {string} [config.path_prefix="/"] The prefix to use in front of the path, if Jira isn't at "/"
- * @param {boolean} [config.strictSSL=true] 
+ * @param {boolean} [config.strictSSL=true]
  * @param {string} [config.version=2] The version of the Jira API to which you will be connecting.  Currently, only
  *     version 2 is supported.
  * @param {Object} [config.basic_auth] The authentication information used tp connect to Jira. Must contain EITHER username and password
@@ -145,7 +145,7 @@ var worklog = require('./api/worklog');
  *      Default - require('request').
  */
 
-var JiraClient = module.exports = function (config) {
+var JiraConnector = module.exports = function (config) {
     if (!config.host) {
         throw new Error(errorStrings.NO_HOST_ERROR);
     }
@@ -260,7 +260,7 @@ var JiraClient = module.exports = function (config) {
      * Simple utility to build a REST endpoint URL for the Jira API.
      *
      * @method buildURL
-     * @memberOf JiraClient#
+     * @memberOf JiraConnector#
      * @param path The path of the URL without concern for the root of the REST API.
      * @param {string | number} [forcedVersion] Use this param to force a particular version
      * @returns {string} The constructed URL.
@@ -282,7 +282,7 @@ var JiraClient = module.exports = function (config) {
      * Simple utility to build a REST endpoint URL for the Jira Agile API.
      *
      * @method buildAgileURL
-     * @memberOf JiraClient#
+     * @memberOf JiraConnector#
      * @param path The path of the URL without concern for the root of the REST API.
      * @param {string | number} [forcedVersion] Use this param to force a particular version
      * @returns {string} The constructed URL.
@@ -304,7 +304,7 @@ var JiraClient = module.exports = function (config) {
      * Simple utility to build a REST endpoint URL for the Jira Auth API.
      *
      * @method buildAuthURL
-     * @memberOf JiraClient#
+     * @memberOf JiraConnector#
      * @param path The path of the URL without concern for the root of the REST API.
      * @param {string | number} [forcedVersion] Use this param to force a particular version
      * @returns {string} The constructed URL.
@@ -326,7 +326,7 @@ var JiraClient = module.exports = function (config) {
      * Simple utility to build a REST endpoint URL for the Jira webhook API.
      *
      * @method buildWebhookURL
-     * @memberOf JiraClient#
+     * @memberOf JiraConnector#
      * @param path The path of the URL without concern for the root of the REST API.
      * @param {string | number} [forcedVersion] Use this param to force a particular version
      * @returns {string} The constructed URL.
@@ -348,7 +348,7 @@ var JiraClient = module.exports = function (config) {
      * Make a request to the Jira API and call back with it's response.
      *
      * @method makeRequest
-     * @memberOf JiraClient#
+     * @memberOf JiraConnector#
      * @param options The request options.
      * @param [callback] Called with the APIs response.
      * @param {string} [successString] If supplied, this is reported instead of the response body.
@@ -479,8 +479,8 @@ var JiraClient = module.exports = function (config) {
 
     };
 
-}).call(JiraClient.prototype);
+}).call(JiraConnector.prototype);
 
-JiraClient.oauth_util = require('./lib/oauth_util');
+JiraConnector.oauth_util = require('./lib/oauth_util');
 
 exports.oauth_util = oauth_util;

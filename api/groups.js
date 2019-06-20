@@ -5,11 +5,11 @@ module.exports = GroupsClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/groups'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor GroupsClient
  */
-function GroupsClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function GroupsClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Returns groups with substrings matching a given query. This is mainly for use with the group picker, so the
@@ -29,7 +29,7 @@ function GroupsClient(jiraClient) {
      */
     this.findGroups = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/groups/picker'),
+            uri: this.jiraConnector.buildURL('/groups/picker'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
@@ -40,6 +40,6 @@ function GroupsClient(jiraClient) {
             }
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     }
 }

@@ -5,11 +5,11 @@ module.exports = JqlClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/jql/autocompletedata'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor JqlClient
  */
-function JqlClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function JqlClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Returns the auto complete data required for JQL searches.
@@ -22,12 +22,12 @@ function JqlClient(jiraClient) {
      */
     this.getAutoCompleteData = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/jql/autocompletedata'),
+            uri: this.jiraConnector.buildURL('/jql/autocompletedata'),
             method: 'GET',
             json: true,
             followAllRedirects: true
         };
 
-        return this.jiraClient.makeRequest(options, callback)
+        return this.jiraConnector.makeRequest(options, callback)
     }
 }

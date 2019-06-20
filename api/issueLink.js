@@ -6,11 +6,11 @@ module.exports = IssueLinkClient;
 
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/issueLink'
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor IssueLinkClient
  */
-function IssueLinkClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function IssueLinkClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Creates an issue link between two issues. The user requires the link issue permission for the issue which will
@@ -36,13 +36,13 @@ function IssueLinkClient(jiraClient) {
 
         var options = {
             method: 'POST',
-            uri: this.jiraClient.buildURL('/issueLink'),
+            uri: this.jiraConnector.buildURL('/issueLink'),
             json: true,
             followAllRedirects: true,
             body: opts.issueLink
         };
 
-        return this.jiraClient.makeRequest(options, callback, 'Issue Link Created');
+        return this.jiraConnector.makeRequest(options, callback, 'Issue Link Created');
     };
 
     /**
@@ -62,12 +62,12 @@ function IssueLinkClient(jiraClient) {
 
         var options = {
             method: 'GET',
-            uri: this.jiraClient.buildURL('/issueLink/' + opts.linkId),
+            uri: this.jiraConnector.buildURL('/issueLink/' + opts.linkId),
             json: true,
             followAllRedirects: true
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -88,11 +88,11 @@ function IssueLinkClient(jiraClient) {
 
         var options = {
             method: 'DELETE',
-            uri: this.jiraClient.buildURL('/issueLink/' + opts.linkId),
+            uri: this.jiraConnector.buildURL('/issueLink/' + opts.linkId),
             json: true,
             followAllRedirects: true
         };
 
-        return this.jiraClient.makeRequest(options, callback, 'Issue Link Deleted');
+        return this.jiraConnector.makeRequest(options, callback, 'Issue Link Deleted');
     };
 }

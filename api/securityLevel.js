@@ -5,11 +5,11 @@ module.exports = SecurityLevelClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/securitylevel'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor SecurityLevelClient
  */
-function SecurityLevelClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function SecurityLevelClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Get a full representation of the security level that has the given id.
@@ -23,12 +23,12 @@ function SecurityLevelClient(jiraClient) {
      */
     this.getSecurityLevel = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/securitylevel/' + opts.securityLevelId),
+            uri: this.jiraConnector.buildURL('/securitylevel/' + opts.securityLevelId),
             method: 'GET',
             json: true,
             followAllRedirects: true
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     }
 }

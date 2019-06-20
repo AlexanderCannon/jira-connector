@@ -7,10 +7,10 @@ module.exports = CommentClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/comment'
  * @constructor CommentClient
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  */
-function CommentClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function CommentClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Returns the keys of all properties for the comment identified by the key or by the id.
@@ -24,7 +24,7 @@ function CommentClient(jiraClient) {
      */
     this.getCommentPropertyKeys = function (opts, callback) {
         var options = this.buildRequestOptions(opts, '', 'GET');
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -49,7 +49,7 @@ function CommentClient(jiraClient) {
             throw new Error(errorStrings.NO_COMMENT_PROPERTY_VALUE_ERROR);
         }
         var options = this.buildRequestOptions(opts, '/' + opts.propertyKey, 'PUT', opts.propertyValue);
-        return this.jiraClient.makeRequest(options, callback, 'Property Edited');
+        return this.jiraConnector.makeRequest(options, callback, 'Property Edited');
     };
 
     /**
@@ -69,7 +69,7 @@ function CommentClient(jiraClient) {
             throw new Error(errorStrings.NO_COMMENT_PROPERTY_KEY_ERROR);
         }
         var options = this.buildRequestOptions(opts, '/' + opts.propertyKey, 'GET');
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -89,7 +89,7 @@ function CommentClient(jiraClient) {
             throw new Error(errorStrings.NO_COMMENT_PROPERTY_KEY_ERROR);
         }
         var options = this.buildRequestOptions(opts, '/' + opts.propertyKey, 'DELETE');
-        return this.jiraClient.makeRequest(options, callback, 'Comment property deleted');
+        return this.jiraConnector.makeRequest(options, callback, 'Comment property deleted');
     };
 
     /**
@@ -128,7 +128,7 @@ function CommentClient(jiraClient) {
         }
 
         return {
-            uri: this.jiraClient.buildURL(basePath + path),
+            uri: this.jiraConnector.buildURL(basePath + path),
             method: method,
             body: body,
             qs: qs,

@@ -5,11 +5,11 @@ module.exports = IssueTypeClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/issuetype'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor IssueTypeClient
  */
-function IssueTypeClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function IssueTypeClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Returns a list of all issue types visible to the user
@@ -22,13 +22,13 @@ function IssueTypeClient(jiraClient) {
      */
     this.getAllIssueTypes = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/issuetype'),
+            uri: this.jiraConnector.buildURL('/issuetype'),
             method: 'GET',
             json: true,
             followAllRedirects: true
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -47,16 +47,16 @@ function IssueTypeClient(jiraClient) {
      */
     this.createIssueType = function (issueType, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/issuetype'),
+            uri: this.jiraConnector.buildURL('/issuetype'),
             method: 'POST',
             json: true,
             followAllRedirects: true,
             body: issueType,
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
-    
+
     /**
      * Get a full representation of the issue type that has the given id.
      *
@@ -69,13 +69,13 @@ function IssueTypeClient(jiraClient) {
      */
     this.getIssueType = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/issuetype/' + opts.issueTypeId),
+            uri: this.jiraConnector.buildURL('/issuetype/' + opts.issueTypeId),
             method: 'GET',
             json: true,
             followAllRedirects: true
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -95,7 +95,7 @@ function IssueTypeClient(jiraClient) {
      */
     this.deleteIssueType = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/issuetype/' + opts.issueTypeId),
+            uri: this.jiraConnector.buildURL('/issuetype/' + opts.issueTypeId),
             method: 'DELETE',
             json: true,
             followAllRedirects: true,
@@ -104,7 +104,7 @@ function IssueTypeClient(jiraClient) {
             },
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -124,14 +124,14 @@ function IssueTypeClient(jiraClient) {
      */
     this.updateIssueType = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/issuetype/' + opts.issueTypeId),
+            uri: this.jiraConnector.buildURL('/issuetype/' + opts.issueTypeId),
             method: 'PUT',
             json: true,
             followAllRedirects: true,
             body: opts.issueType,
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -149,12 +149,12 @@ function IssueTypeClient(jiraClient) {
      */
     this.getAlternativeIssueTypes = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/issuetype/' + opts.issueTypeId + '/alternatives'),
+            uri: this.jiraConnector.buildURL('/issuetype/' + opts.issueTypeId + '/alternatives'),
             method: 'GET',
             json: true,
             followAllRedirects: true
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 }

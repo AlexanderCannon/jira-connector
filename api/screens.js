@@ -5,7 +5,7 @@ module.exports = ScreensClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/screens'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraClient
  * @constructor ScreensClient
  */
 function ScreensClient(jiraClient) {

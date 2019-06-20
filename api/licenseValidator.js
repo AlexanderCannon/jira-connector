@@ -5,11 +5,11 @@ module.exports = LicenseValidatorClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/licenseValidator'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor LicenseValidatorClient
  */
-function LicenseValidatorClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function LicenseValidatorClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      *
@@ -22,13 +22,13 @@ function LicenseValidatorClient(jiraClient) {
      */
     this.validateLicense = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/licenseValidator'),
+            uri: this.jiraConnector.buildURL('/licenseValidator'),
             method: 'POST',
             json: true,
             followAllRedirects: true,
             body: opts.license
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     }
 }

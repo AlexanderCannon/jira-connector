@@ -4,11 +4,11 @@ module.exports = VersionClient;
 
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/version'
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor VersionClient
  */
-function VersionClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function VersionClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Creates a version
@@ -22,14 +22,14 @@ function VersionClient(jiraClient) {
      */
     this.createVersion = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/version'),
+            uri: this.jiraConnector.buildURL('/version'),
             method: 'POST',
             json: true,
             followAllRedirects: true,
             body: opts.version
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -49,9 +49,9 @@ function VersionClient(jiraClient) {
      */
     this.moveVersion = function (opts, callback) {
         var options = this.buildRequestOptions(opts, '/move', 'POST', {position: opts.position, after: opts.after});
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
-    
+
      /**
      * Get a all versions from specific board.
      *
@@ -64,7 +64,7 @@ function VersionClient(jiraClient) {
      */
     this.getAllVersions = function(opts, callback) {
         var options = {
-            uri: this.jiraClient.buildAgileURL(`/board/${opts.boardId}/version`),
+            uri: this.jiraConnector.buildAgileURL(`/board/${opts.boardId}/version`),
             method: 'GET',
             json: true,
             followAllRedirects: true,
@@ -74,9 +74,9 @@ function VersionClient(jiraClient) {
                 maxResults: opts.maxResults
             }
         }
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     }
-    
+
     /**
      * Get a project version.
      *
@@ -89,7 +89,7 @@ function VersionClient(jiraClient) {
      */
     this.getVersion = function (opts, callback) {
         var options = this.buildRequestOptions(opts, '', 'GET');
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -105,7 +105,7 @@ function VersionClient(jiraClient) {
      */
     this.editVersion = function (opts, callback) {
         var options = this.buildRequestOptions(opts, '', 'PUT', opts.version);
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -120,7 +120,7 @@ function VersionClient(jiraClient) {
      */
     this.getRelatedIssueCounts = function (opts, callback) {
         var options = this.buildRequestOptions(opts, '/relatedIssueCounts', 'GET');
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -135,7 +135,7 @@ function VersionClient(jiraClient) {
      */
     this.getUnresolvedIssueCount = function (opts, callback) {
         var options = this.buildRequestOptions(opts, '/unresolvedIssueCount', 'GET');
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -150,7 +150,7 @@ function VersionClient(jiraClient) {
      */
     this.getRemoteLinks = function (opts, callback) {
         var options = this.buildRequestOptions(opts, '/remotelink', 'GET');
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -167,7 +167,7 @@ function VersionClient(jiraClient) {
      */
     this.createRemoteLink = function (opts, callback) {
         var options = this.buildRequestOptions(opts, '/remotelink', 'POST', opts.remoteLink);
-        return this.jiraClient.makeRequest(options, callback, 'Remotelink Created');
+        return this.jiraConnector.makeRequest(options, callback, 'Remotelink Created');
     };
 
     /**
@@ -183,7 +183,7 @@ function VersionClient(jiraClient) {
      */
     this.getRemoteLink = function (opts, callback) {
         var options = this.buildRequestOptions(opts, '/remotelink/' + opts.remoteLinkId, 'GET');
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -199,7 +199,7 @@ function VersionClient(jiraClient) {
      */
     this.deleteRemoteLink = function (opts, callback) {
         var options = this.buildRequestOptions(opts, '/remotelink/' + opts.remoteLinkId, 'DELETE');
-        return this.jiraClient.makeRequest(options, callback, 'Remote Link Deleted');
+        return this.jiraConnector.makeRequest(options, callback, 'Remote Link Deleted');
     };
 
     /**
@@ -214,7 +214,7 @@ function VersionClient(jiraClient) {
      */
     this.deleteVersion = function (opts, callback) {
         var options = this.buildRequestOptions(opts, '', 'DELETE');
-        return this.jiraClient.makeRequest(options, callback, 'Version Deleted');
+        return this.jiraConnector.makeRequest(options, callback, 'Version Deleted');
     };
 
     /**
@@ -229,7 +229,7 @@ function VersionClient(jiraClient) {
      */
     this.deleteAllRemoteLinks = function (opts, callback) {
         var options = this.buildRequestOptions(opts, '/remotelink', 'DELETE');
-        return this.jiraClient.makeRequest(options, callback, 'Remote Links Deleted');
+        return this.jiraConnector.makeRequest(options, callback, 'Remote Links Deleted');
     };
 
     /**
@@ -244,13 +244,13 @@ function VersionClient(jiraClient) {
      */
     this.getGlobalRemoteLink = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/version/remotelink'),
+            uri: this.jiraConnector.buildURL('/version/remotelink'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
             qs: {globalId: opts.globalId}
         };
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -291,7 +291,7 @@ function VersionClient(jiraClient) {
         }
 
         return {
-            uri: this.jiraClient.buildURL(basePath + path),
+            uri: this.jiraConnector.buildURL(basePath + path),
             method: method,
             body: body,
             qs: qs,

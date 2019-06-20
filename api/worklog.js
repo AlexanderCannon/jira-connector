@@ -5,14 +5,14 @@ module.exports = WorklogClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/worklog'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor WorkLogClient
  */
-function WorklogClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function WorklogClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
-     * Returns worklogs id and delete time of worklogs that were deleted since given time. The returns set of worklogs is 
+     * Returns worklogs id and delete time of worklogs that were deleted since given time. The returns set of worklogs is
      * limited to 1000 elements. This API will not return worklogs deleted during last minute.
      *
      * @method getWorklogDeleted
@@ -22,10 +22,10 @@ function WorklogClient(jiraClient) {
      *      Default: 0
      * @param [callback] Called when the search results are retrieved.
      * @return {Promise} Resolved when the search results are retrieved.
-     */ 
+     */
     this.getWorklogDeleted = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/worklog/deleted'),
+            uri: this.jiraConnector.buildURL('/worklog/deleted'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
@@ -33,11 +33,11 @@ function WorklogClient(jiraClient) {
                 since: opts.since
             }
         };
-        return this.jiraClient.makeRequest(options, callback)
+        return this.jiraConnector.makeRequest(options, callback)
     };
 
     /**
-     * Returns Returns worklogs for given worklog ids. Only worklogs to which the calling user has permissions, 
+     * Returns Returns worklogs for given worklog ids. Only worklogs to which the calling user has permissions,
      * will be included in the result. The returns set of worklogs is limited to 1000 elements.
      *
      * @method worklogList
@@ -46,10 +46,10 @@ function WorklogClient(jiraClient) {
      * @param {array} [opts.ids] a JSON array named ids which contains a list of issue IDs
      * @param [callback] Called when the search results are retrieved.
      * @return {Promise} Resolved when the search results are retrieved.
-     */ 
+     */
     this.worklogList = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/worklog/list'),
+            uri: this.jiraConnector.buildURL('/worklog/list'),
             method: 'POST',
             json: true,
             followAllRedirects: true,
@@ -57,11 +57,11 @@ function WorklogClient(jiraClient) {
                 ids: opts.ids
             }
         };
-        return this.jiraClient.makeRequest(options, callback)
+        return this.jiraConnector.makeRequest(options, callback)
     };
 
     /**
-     * Returns worklogs id and update time of worklogs that were updated since given time. The returns set of worklogs is 
+     * Returns worklogs id and update time of worklogs that were updated since given time. The returns set of worklogs is
      * limited to 1000 elements. This API will not return worklogs deleted during last minute.
      *
      * @method getWorklogUpdated
@@ -71,10 +71,10 @@ function WorklogClient(jiraClient) {
      *      Default: 0
      * @param [callback] Called when the search results are retrieved.
      * @return {Promise} Resolved when the search results are retrieved.
-     */ 
+     */
     this.getWorklogUpdated = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/worklog/updated'),
+            uri: this.jiraConnector.buildURL('/worklog/updated'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
@@ -82,6 +82,6 @@ function WorklogClient(jiraClient) {
                 since: opts.since
             }
         };
-        return this.jiraClient.makeRequest(options, callback)
+        return this.jiraConnector.makeRequest(options, callback)
     }
 }

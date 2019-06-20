@@ -5,7 +5,7 @@ module.exports = ProjectValidateClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/projectvalidate'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraClient
  * @constructor ProjectValidateClient
  */
 function ProjectValidateClient(jiraClient) {

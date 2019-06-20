@@ -5,11 +5,11 @@ module.exports = PriorityClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/priority'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor PriorityClient
  */
-function PriorityClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function PriorityClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Returns a list of all priorities visible to the user
@@ -22,13 +22,13 @@ function PriorityClient(jiraClient) {
      */
     this.getAllPriorities = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/priority'),
+            uri: this.jiraConnector.buildURL('/priority'),
             method: 'GET',
             json: true,
             followAllRedirects: true
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -43,12 +43,12 @@ function PriorityClient(jiraClient) {
      */
     this.getPriority = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildURL('/priority/' + opts.priorityId),
+            uri: this.jiraConnector.buildURL('/priority/' + opts.priorityId),
             method: 'GET',
             json: true,
             followAllRedirects: true
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 }

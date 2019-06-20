@@ -5,7 +5,7 @@ module.exports = PasswordClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/password'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraClient
  * @constructor PasswordClient
  */
 function PasswordClient(jiraClient) {

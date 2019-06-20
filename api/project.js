@@ -4,7 +4,7 @@ module.exports = ProjectClient;
 
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/project'
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraClient
  * @constructor ProjectClient
  */
 function ProjectClient(jiraClient) {

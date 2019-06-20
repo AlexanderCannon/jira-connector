@@ -5,11 +5,11 @@ module.exports = RoleClient;
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/role'
  *
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor RoleClient
  */
-function RoleClient(jiraClient) {
-  this.jiraClient = jiraClient;
+function RoleClient(jiraConnector) {
+  this.jiraConnector = jiraConnector;
 
   /**
    * Get all the ProjectRoles available in Jira. Currently this list is global.
@@ -22,13 +22,13 @@ function RoleClient(jiraClient) {
    */
   this.getAll = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildURL('/role'),
+      uri: this.jiraConnector.buildURL('/role'),
       method: 'GET',
       json: true,
       followAllRedirects: true
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   }
 
   /**
@@ -44,14 +44,14 @@ function RoleClient(jiraClient) {
    */
   this.createRole = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildURL('/role'),
+      uri: this.jiraConnector.buildURL('/role'),
       method: 'POST',
       json: true,
       followAllRedirects: true,
       body: opts.role
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   }
 
   /**
@@ -65,13 +65,13 @@ function RoleClient(jiraClient) {
    */
   this.getRoleById = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildURL('/role/' + opts.roleId),
+      uri: this.jiraConnector.buildURL('/role/' + opts.roleId),
       method: 'GET',
       json: true,
       followAllRedirects: true,
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   /**
@@ -87,14 +87,14 @@ function RoleClient(jiraClient) {
    */
   this.updateRole = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildURL('/role/' + opts.roleId),
+      uri: this.jiraConnector.buildURL('/role/' + opts.roleId),
       method: 'PUT',
       json: true,
       followAllRedirects: true,
       body: opts.role,
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   /**
@@ -110,7 +110,7 @@ function RoleClient(jiraClient) {
   */
   this.deleteRole = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildURL('/role/' + opts.roleId),
+      uri: this.jiraConnector.buildURL('/role/' + opts.roleId),
       method: 'DELETE',
       json: true,
       followAllRedirects: true,
@@ -119,7 +119,7 @@ function RoleClient(jiraClient) {
       }
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   /**
@@ -134,13 +134,13 @@ function RoleClient(jiraClient) {
   */
   this.getActors = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildURL('/role/' + opts.roleId + '/actors'),
+      uri: this.jiraConnector.buildURL('/role/' + opts.roleId + '/actors'),
       method: 'GET',
       json: true,
       followAllRedirects: true,
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   /**
@@ -158,7 +158,7 @@ function RoleClient(jiraClient) {
   */
   this.addActors = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildURL('/role/' + opts.roleId + '/actors'),
+      uri: this.jiraConnector.buildURL('/role/' + opts.roleId + '/actors'),
       method: 'POST',
       json: true,
       followAllRedirects: true,
@@ -168,7 +168,7 @@ function RoleClient(jiraClient) {
       },
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 
   /**
@@ -185,7 +185,7 @@ function RoleClient(jiraClient) {
   */
   this.removeActor = function (opts, callback) {
     var options = {
-      uri: this.jiraClient.buildURL('/role/' + opts.roleId + '/actors'),
+      uri: this.jiraConnector.buildURL('/role/' + opts.roleId + '/actors'),
       method: 'DELETE',
       json: true,
       followAllRedirects: true,
@@ -195,6 +195,6 @@ function RoleClient(jiraClient) {
       },
     };
 
-    return this.jiraClient.makeRequest(options, callback);
+    return this.jiraConnector.makeRequest(options, callback);
   };
 }

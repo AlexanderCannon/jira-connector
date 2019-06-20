@@ -4,17 +4,17 @@ module.exports = AgileEpicClient;
 
 /**
  * Used to access Jira REST endpoints in '/rest/agile/1.0/epic'
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor AgileEpicClient
  */
-function AgileEpicClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function AgileEpicClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Returns all issues that do not belong to any epic. This only includes issues that
      * the user has permission to view. Issues returned from this resource include Agile fields,
-     * like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.  
-     * 
+     * like sprint, closedSprints, flagged, and epic. By default, the returned issues are ordered by rank.
+     *
      * @method getIssuesWithoutEpic
      * @memberOf AgileEpicClient
      * @param opts The request options to send to the Jira API
@@ -33,7 +33,7 @@ function AgileEpicClient(jiraClient) {
      * @return { Promise } Resolved when the dashboards have been retrieved.
      */
     this.getIssuesWithoutEpic = function (opts, callback) {
-        var endpoint = this.jiraClient.buildAgileURL('/epic/none/issue');
+        var endpoint = this.jiraConnector.buildAgileURL('/epic/none/issue');
         opts = opts || {};
 
         var options = {
@@ -51,14 +51,14 @@ function AgileEpicClient(jiraClient) {
             }
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     }
 
     /**
      * Removes issues from epics.
      * The user needs to have the edit issue permission for all issue they want to remove from epics.
      * The maximum number of issues that can be moved in one operation is 50.
-     * 
+     *
      * @method removeIssuesFromEpic
      * @memberOf AgileEpicClient
      * @param opts The request options to send to the Jira API
@@ -67,7 +67,7 @@ function AgileEpicClient(jiraClient) {
      * @return { Promise } Resolved when the dashboards have been retrieved.
      */
     this.removeIssuesFromEpic = function (opts, callback) {
-        var endpoint = this.jiraClient.buildAgileURL('/epic/none/issue');
+        var endpoint = this.jiraConnector.buildAgileURL('/epic/none/issue');
         opts = opts || {};
 
         var options = {
@@ -80,12 +80,12 @@ function AgileEpicClient(jiraClient) {
             }
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     }
 
     /**
      * Returns the epic for a given epic ID. This epic will only be returned if the user has permission to view it.
-     * 
+     *
      * @method getEpic
      * @memberOf AgileEpicClient
      * @param opts The request options to send to the Jira API
@@ -94,7 +94,7 @@ function AgileEpicClient(jiraClient) {
      * @return { Promise } Resolved when the dashboards have been retrieved.
      */
     this.getEpic = function (opts, callback) {
-        var endpoint = this.jiraClient.buildAgileURL('/epic/' + opts.epicId);
+        var endpoint = this.jiraConnector.buildAgileURL('/epic/' + opts.epicId);
 
         var options = {
             uri: endpoint,
@@ -103,13 +103,13 @@ function AgileEpicClient(jiraClient) {
             followAllRedirects: true
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     }
 
     /**
      * Performs a partial update of the epic. A partial update means that fields not present
      * in the request JSON will not be updated. Valid values for color are color_1 to color_9.
-     * 
+     *
      * @method partiallyUpdateEpic
      * @memberOf AgileEpicClient
      * @param opts The request options to send to the Jira API
@@ -122,7 +122,7 @@ function AgileEpicClient(jiraClient) {
      * @return { Promise } Resolved when the dashboards have been retrieved.
      */
     this.partiallyUpdateEpic = function (opts, callback) {
-        var endpoint = this.jiraClient.buildAgileURL('/epic/' + opts.epicId);
+        var endpoint = this.jiraConnector.buildAgileURL('/epic/' + opts.epicId);
 
         var options = {
             uri: endpoint,
@@ -137,12 +137,12 @@ function AgileEpicClient(jiraClient) {
             }
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     }
 
     /**
-     * Get a list of all issues associated with an agile epic   
-     * 
+     * Get a list of all issues associated with an agile epic
+     *
      * @method getIssuesForEpic
      * @memberOf AgileEpicClient
      * @param opts The request options to send to the Jira API
@@ -163,7 +163,7 @@ function AgileEpicClient(jiraClient) {
      */
     this.getIssuesForEpic = function (opts, callback) {
         var options = {
-            uri: this.jiraClient.buildAgileURL('/epic/' + opts.epicId + '/issue'),
+            uri: this.jiraConnector.buildAgileURL('/epic/' + opts.epicId + '/issue'),
             method: 'GET',
             json: true,
             followAllRedirects: true,
@@ -177,7 +177,7 @@ function AgileEpicClient(jiraClient) {
             }
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -185,7 +185,7 @@ function AgileEpicClient(jiraClient) {
      * That means that already assigned issues to an epic, will not be assigned to the previous epic anymore.
      * The user needs to have the edit issue permission for all issue they want to move and to the epic.
      * The maximum number of issues that can be moved in one operation is 50.
-     * 
+     *
      * @method moveIssuesToEpic
      * @memberOf AgileEpicClient
      * @param opts The request options to send to the Jira API
@@ -195,7 +195,7 @@ function AgileEpicClient(jiraClient) {
      * @return { Promise } Resolved when the dashboards have been retrieved.
      */
     this.moveIssuesToEpic = function (opts, callback) {
-        var endpoint = this.jiraClient.buildAgileURL('/epic/' + opts.epicId + '/issue');
+        var endpoint = this.jiraConnector.buildAgileURL('/epic/' + opts.epicId + '/issue');
 
         var options = {
             uri: endpoint,
@@ -207,7 +207,7 @@ function AgileEpicClient(jiraClient) {
             }
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     }
 
     /**
@@ -221,9 +221,9 @@ function AgileEpicClient(jiraClient) {
 
     /**
      * Moves (ranks) an epic before or after a given epic.
-     * 
+     *
      * If rankCustomFieldId is not defined, the default rank field will be used.
-     * 
+     *
      * @method rankEpics
      * @memberOf AgileEpicClient
      * @param opts The request options to send to the Jira API
@@ -235,7 +235,7 @@ function AgileEpicClient(jiraClient) {
      * @return { Promise } Resolved when the dashboards have been retrieved.
      */
     this.rankEpics = function (opts, callback) {
-        var endpoint = this.jiraClient.buildAgileURL('/epic/' + opts.epicId + '/rank');
+        var endpoint = this.jiraConnector.buildAgileURL('/epic/' + opts.epicId + '/rank');
 
         var options = {
             uri: endpoint,
@@ -249,6 +249,6 @@ function AgileEpicClient(jiraClient) {
             }
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     }
 }

@@ -8,11 +8,11 @@ module.exports = AvatarClient;
 
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/avatar'
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraConnector
  * @constructor AvatarClient
  */
-function AvatarClient(jiraClient) {
-    this.jiraClient = jiraClient;
+function AvatarClient(jiraConnector) {
+    this.jiraConnector = jiraConnector;
 
     /**
      * Returns all system avatars of the given type.
@@ -32,10 +32,10 @@ function AvatarClient(jiraClient) {
             method: 'GET',
             json: true,
             followAllRedirects: true,
-            uri: this.jiraClient.buildURL('/avatar/' + opts.avatarType + '/system')
+            uri: this.jiraConnector.buildURL('/avatar/' + opts.avatarType + '/system')
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -62,7 +62,7 @@ function AvatarClient(jiraClient) {
             method: 'POST',
             json: true,
             followAllRedirects: true,
-            uri: this.jiraClient.buildURL('/avatar/' + opts.avatarType + '/temporary'),
+            uri: this.jiraConnector.buildURL('/avatar/' + opts.avatarType + '/temporary'),
             headers: {
                 "X-Atlassian-Token": "no-check"
             },
@@ -76,7 +76,7 @@ function AvatarClient(jiraClient) {
         };
         delete options.body;
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 
     /**
@@ -100,13 +100,13 @@ function AvatarClient(jiraClient) {
             method: 'POST',
             json: true,
             followAllRedirects: true,
-            uri: this.jiraClient.buildURL('/avatar/' + opts.avatarType + '/temporaryCrop'),
+            uri: this.jiraConnector.buildURL('/avatar/' + opts.avatarType + '/temporaryCrop'),
             headers: {
                 "X-Atlassian-Token": "no-check"
             },
             body: opts.crop
         };
 
-        return this.jiraClient.makeRequest(options, callback);
+        return this.jiraConnector.makeRequest(options, callback);
     };
 }

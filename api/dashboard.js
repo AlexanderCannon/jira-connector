@@ -4,7 +4,7 @@ module.exports = DashboardClient;
 
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/dashboard'
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraClient
  * @constructor DashboardClient
  */
 function DashboardClient(jiraClient) {

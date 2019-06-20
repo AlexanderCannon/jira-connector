@@ -6,7 +6,7 @@ module.exports = IssueLinkTypeClient;
 
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/issueLinkType'
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraClient
  * @constructor IssueLinkTypeClient
  */
 function IssueLinkTypeClient(jiraClient) {

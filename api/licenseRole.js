@@ -4,7 +4,7 @@ module.exports = LicenseRoleClient;
 
 /**
  * Used to access Jira REST endpoints in '/rest/api/2/licenserole'
- * @param {JiraClient} jiraClient
+ * @param {JiraConnector} jiraClient
  * @constructor LicenseRoleClient
  */
 function LicenseRoleClient(jiraClient) {
